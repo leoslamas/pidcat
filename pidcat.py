@@ -52,6 +52,16 @@ min_level = LOG_LEVELS_MAP[args.min_level.upper()]
 
 package = args.package
 
+#Find first package containing given string
+for index, pkg in enumerate(package):
+    if "." not in pkg:
+        cmd = ["adb", "shell", "pm", "list", "packages", "|", "grep", pkg]
+        new_package = subprocess.Popen(cmd, stdout=PIPE, stderr=PIPE).communicate()[0]
+        if len(new_package):
+            package[index] = new_package.split('\n')[0].split(':')[1].replace("\r", "", -1)
+
+print "Pidcat logging: %s" % package
+
 base_adb_command = ['adb']
 if args.device_serial:
   base_adb_command.extend(['-s', args.device_serial])
