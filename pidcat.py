@@ -1,4 +1,4 @@
-#!/usr/bin/python -u
+#!/usr/bin/env -S python -u
 
 '''
 Copyright 2009, The Android Open Source Project
@@ -27,7 +27,7 @@ import re
 import subprocess
 from subprocess import PIPE
 
-__version__ = '2.0.0'
+__version__ = '2.1.0'
 
 LOG_LEVELS = 'VDIWEF'
 LOG_LEVELS_MAP = dict([(LOG_LEVELS[i], i) for i in range(len(LOG_LEVELS))])
@@ -206,7 +206,7 @@ class FakeStdinProcess():
     return None
 
 if sys.stdin.isatty():
-  adb = subprocess.Popen(adb_command, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+  adb = subprocess.Popen(adb_command, stdin=PIPE, stdout=PIPE)
 else:
   adb = FakeStdinProcess()
 pids = set()
